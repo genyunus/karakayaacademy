@@ -97,6 +97,44 @@ async function sendInquiryNotification({
   return { skipped: false };
 }
 
+async function saveInquiry(supabase, data) {
+  const fullName = `${data.firstName} ${data.lastName}`.trim();
+
+  const primaryInsert = await supabase.from("inquiries").insert({
+    first_name: data.firstName,
+    last_name: data.lastName,
+    full_name: fullName,
+    email_address: data.email,
+    phone_number: data.phoneNumber,
+    interest: data.interest,
+    title: data.interest,
+    message_body: data.messageBody,
+    source: "website",
+  });
+
+  if (!primaryInsert.error) {
+    return { ok: true, mode: "modern" };
+  }
+
+  console.error("Inquiry primary insert failed", primaryInsert.error);
+
+  const legacyInsert = await supabase.from("inquiries").insert({
+    name: fullName,
+    email: data.email,
+    interest: data.interest,
+    message: data.messageBody,
+    source: "website",
+  });
+
+  if (!legacyInsert.error) {
+    return { ok: true, mode: "legacy" };
+  }
+
+  console.error("Inquiry legacy insert failed", legacyInsert.error);
+
+  return { ok: false, error: primaryInsert.error, legacyError: legacyInsert.error };
+}
+
 export async function POST(request) {
   const payload = await request.json().catch(() => null);
   const parsed = inquirySchema.safeParse(payload);
@@ -119,20 +157,9 @@ export async function POST(request) {
     });
   }
 
-  const fullName = `${parsed.data.firstName} ${parsed.data.lastName}`.trim();
-  const { error } = await supabase.from("inquiries").insert({
-    first_name: parsed.data.firstName,
-    last_name: parsed.data.lastName,
-    full_name: fullName,
-    email_address: parsed.data.email,
-    phone_number: parsed.data.phoneNumber,
-    interest: parsed.data.interest,
-    title: parsed.data.interest,
-    message_body: parsed.data.messageBody,
-    source: "website",
-  });
+  const saveResult = await saveInquiry(supabase, parsed.data);
 
-  if (error) {
+  if (!saveResult.ok) {
     return NextResponse.json(
       {
         error:
