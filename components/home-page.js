@@ -5,15 +5,21 @@ import { useEffect, useState } from "react";
 import { classes, faqs, packages } from "../lib/site-data";
 
 const initialInquiry = {
-  name: "",
+  firstName: "",
+  lastName: "",
   email: "",
+  phoneNumber: "",
   interest: "",
-  message: "",
+  messageBody: "",
 };
 
 const initialBooking = {
-  name: "",
+  firstName: "",
+  lastName: "",
   email: "",
+  phoneNumber: "",
+  interest: "",
+  messageBody: "",
   classSlug: classes[0]?.slug ?? "",
 };
 
@@ -390,19 +396,41 @@ export default function HomePage() {
             </div>
             <form className="contact-form capability-form" onSubmit={handleBookingSubmit}>
               <label>
-                Name
+                First name
                 <input
                   type="text"
-                  name="name"
-                  value={bookingForm.name}
+                  name="firstName"
+                  value={bookingForm.firstName}
                   onChange={(event) =>
-                    setBookingForm((current) => ({ ...current, name: event.target.value }))
+                    setBookingForm((current) => ({
+                      ...current,
+                      firstName: event.target.value,
+                    }))
                   }
-                  placeholder="Your name"
+                  placeholder="First name"
+                  autoComplete="given-name"
+                  required
                 />
               </label>
               <label>
-                Email
+                Last name
+                <input
+                  type="text"
+                  name="lastName"
+                  value={bookingForm.lastName}
+                  onChange={(event) =>
+                    setBookingForm((current) => ({
+                      ...current,
+                      lastName: event.target.value,
+                    }))
+                  }
+                  placeholder="Last name"
+                  autoComplete="family-name"
+                  required
+                />
+              </label>
+              <label>
+                Email address
                 <input
                   type="email"
                   name="email"
@@ -411,6 +439,25 @@ export default function HomePage() {
                     setBookingForm((current) => ({ ...current, email: event.target.value }))
                   }
                   placeholder="you@example.com"
+                  autoComplete="email"
+                  required
+                />
+              </label>
+              <label>
+                Phone number
+                <input
+                  type="tel"
+                  name="phoneNumber"
+                  value={bookingForm.phoneNumber}
+                  onChange={(event) =>
+                    setBookingForm((current) => ({
+                      ...current,
+                      phoneNumber: event.target.value,
+                    }))
+                  }
+                  placeholder="Phone number"
+                  autoComplete="tel"
+                  required
                 />
               </label>
               <label>
@@ -431,6 +478,38 @@ export default function HomePage() {
                     </option>
                   ))}
                 </select>
+              </label>
+              <label>
+                Interest
+                <input
+                  type="text"
+                  name="interest"
+                  value={bookingForm.interest}
+                  onChange={(event) =>
+                    setBookingForm((current) => ({
+                      ...current,
+                      interest: event.target.value,
+                    }))
+                  }
+                  placeholder="What are you interested in?"
+                  required
+                />
+              </label>
+              <label>
+                Message body
+                <textarea
+                  name="messageBody"
+                  rows="4"
+                  value={bookingForm.messageBody}
+                  onChange={(event) =>
+                    setBookingForm((current) => ({
+                      ...current,
+                      messageBody: event.target.value,
+                    }))
+                  }
+                  placeholder="Tell us about your goals and preferred schedule."
+                  required
+                ></textarea>
               </label>
               <button className="button button--solid" type="submit" disabled={submittingBooking}>
                 {submittingBooking ? "Submitting..." : "Request Booking"}
@@ -528,19 +607,41 @@ export default function HomePage() {
             </div>
             <form className="contact-form" onSubmit={handleInquirySubmit}>
               <label>
-                Name
+                First name
                 <input
                   type="text"
-                  name="name"
-                  value={inquiryForm.name}
+                  name="firstName"
+                  value={inquiryForm.firstName}
                   onChange={(event) =>
-                    setInquiryForm((current) => ({ ...current, name: event.target.value }))
+                    setInquiryForm((current) => ({
+                      ...current,
+                      firstName: event.target.value,
+                    }))
                   }
-                  placeholder="Your name"
+                  placeholder="First name"
+                  autoComplete="given-name"
+                  required
                 />
               </label>
               <label>
-                Email
+                Last name
+                <input
+                  type="text"
+                  name="lastName"
+                  value={inquiryForm.lastName}
+                  onChange={(event) =>
+                    setInquiryForm((current) => ({
+                      ...current,
+                      lastName: event.target.value,
+                    }))
+                  }
+                  placeholder="Last name"
+                  autoComplete="family-name"
+                  required
+                />
+              </label>
+              <label>
+                Email address
                 <input
                   type="email"
                   name="email"
@@ -549,6 +650,25 @@ export default function HomePage() {
                     setInquiryForm((current) => ({ ...current, email: event.target.value }))
                   }
                   placeholder="you@example.com"
+                  autoComplete="email"
+                  required
+                />
+              </label>
+              <label>
+                Phone number
+                <input
+                  type="tel"
+                  name="phoneNumber"
+                  value={inquiryForm.phoneNumber}
+                  onChange={(event) =>
+                    setInquiryForm((current) => ({
+                      ...current,
+                      phoneNumber: event.target.value,
+                    }))
+                  }
+                  placeholder="Phone number"
+                  autoComplete="tel"
+                  required
                 />
               </label>
               <label>
@@ -561,18 +681,23 @@ export default function HomePage() {
                     setInquiryForm((current) => ({ ...current, interest: event.target.value }))
                   }
                   placeholder="Private coaching, membership, consultation..."
+                  required
                 />
               </label>
               <label>
-                Message
+                Message body
                 <textarea
-                  name="message"
+                  name="messageBody"
                   rows="5"
-                  value={inquiryForm.message}
+                  value={inquiryForm.messageBody}
                   onChange={(event) =>
-                    setInquiryForm((current) => ({ ...current, message: event.target.value }))
+                    setInquiryForm((current) => ({
+                      ...current,
+                      messageBody: event.target.value,
+                    }))
                   }
                   placeholder="Tell us what kind of training experience you're looking for."
+                  required
                 ></textarea>
               </label>
               <button className="button button--solid" type="submit" disabled={submittingInquiry}>

@@ -4,10 +4,12 @@ import { z } from "zod";
 import { getSupabaseAdmin } from "../../../lib/supabase-admin";
 
 const inquirySchema = z.object({
-  name: z.string().min(2).max(120),
+  firstName: z.string().trim().min(2).max(80),
+  lastName: z.string().trim().min(2).max(80),
   email: z.email(),
+  phoneNumber: z.string().trim().min(7).max(30),
   interest: z.string().min(2).max(160),
-  message: z.string().min(10).max(2000),
+  messageBody: z.string().min(10).max(2000),
 });
 
 export async function POST(request) {
@@ -32,17 +34,25 @@ export async function POST(request) {
     });
   }
 
+  const fullName = `${parsed.data.firstName} ${parsed.data.lastName}`.trim();
   const { error } = await supabase.from("inquiries").insert({
-    name: parsed.data.name,
-    email: parsed.data.email,
+    first_name: parsed.data.firstName,
+    last_name: parsed.data.lastName,
+    full_name: fullName,
+    email_address: parsed.data.email,
+    phone_number: parsed.data.phoneNumber,
     interest: parsed.data.interest,
-    message: parsed.data.message,
+    title: parsed.data.interest,
+    message_body: parsed.data.messageBody,
     source: "website",
   });
 
   if (error) {
     return NextResponse.json(
-      { error: "Could not save inquiry right now." },
+      {
+        error:
+          "Could not save inquiry right now. Check the Supabase URL, secret key, and database columns.",
+      },
       { status: 500 }
     );
   }
