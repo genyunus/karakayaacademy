@@ -5,8 +5,12 @@ import { getSupabaseAdmin } from "../../../lib/supabase-admin";
 import { classes } from "../../../lib/site-data";
 
 const bookingSchema = z.object({
-  name: z.string().min(2).max(120),
+  firstName: z.string().trim().min(2).max(80),
+  lastName: z.string().trim().min(2).max(80),
   email: z.email(),
+  phoneNumber: z.string().trim().min(7).max(30),
+  interest: z.string().min(2).max(160),
+  messageBody: z.string().min(10).max(2000),
   classSlug: z.string().min(2),
 });
 
@@ -39,17 +43,27 @@ export async function POST(request) {
     });
   }
 
+  const fullName = `${parsed.data.firstName} ${parsed.data.lastName}`.trim();
   const { error } = await supabase.from("class_booking_requests").insert({
     class_slug: selectedClass.slug,
     class_name: selectedClass.name,
-    customer_name: parsed.data.name,
-    customer_email: parsed.data.email,
+    first_name: parsed.data.firstName,
+    last_name: parsed.data.lastName,
+    full_name: fullName,
+    email_address: parsed.data.email,
+    phone_number: parsed.data.phoneNumber,
+    interest: parsed.data.interest,
+    title: parsed.data.interest,
+    message_body: parsed.data.messageBody,
     status: "pending",
   });
 
   if (error) {
     return NextResponse.json(
-      { error: "Could not save booking request right now." },
+      {
+        error:
+          "Could not save booking request right now. Check the Supabase URL, secret key, and database columns.",
+      },
       { status: 500 }
     );
   }
