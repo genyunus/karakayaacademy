@@ -138,9 +138,9 @@ main {
   position: relative;
   isolation: isolate;
   width: 100vw;
-  min-height: min(960px, calc(100vh - 1rem));
+  min-height: min(860px, calc(100vh - 1rem));
   margin-left: calc(50% - 50vw);
-  padding: 8rem 0 4rem;
+  padding: 5.25rem 0 3.5rem;
   overflow: clip;
 }
 
@@ -160,7 +160,7 @@ main {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: 2rem;
-  align-items: end;
+  align-items: start;
   width: min(calc(100% - 2rem), var(--max-width));
   height: 100%;
   margin: 0 auto;
@@ -168,7 +168,7 @@ main {
 
 .hero__copy {
   max-width: 48rem;
-  padding-top: 10rem;
+  padding-top: 2rem;
 }
 
 .hero__copy h1,
@@ -219,7 +219,8 @@ main {
 .hero__rail {
   display: grid;
   gap: 1rem;
-  align-self: end;
+  align-self: start;
+  padding-top: 2.5rem;
 }
 
 .hero-note,
@@ -599,8 +600,8 @@ main {
 }
 
 .reveal {
-  opacity: 0;
-  transform: translateY(18px);
+  opacity: 1;
+  transform: translateY(0);
   transition:
     opacity 420ms ease,
     transform 420ms ease;
@@ -642,7 +643,7 @@ main {
   }
 
   .hero__copy {
-    padding-top: 6rem;
+    padding-top: 1rem;
   }
 
   .hero__copy h1,
