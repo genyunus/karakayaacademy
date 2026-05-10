@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { classes, faqs, packages } from "../lib/site-data";
 
@@ -28,6 +28,32 @@ export default function HomePage() {
   const [submittingInquiry, setSubmittingInquiry] = useState(false);
   const [submittingBooking, setSubmittingBooking] = useState(false);
   const [startingCheckout, setStartingCheckout] = useState("");
+
+  useEffect(() => {
+    const targets = Array.from(document.querySelectorAll(".reveal"));
+
+    if (!targets.length) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.14 }
+    );
+
+    targets.forEach((target) => observer.observe(target));
+
+    return () => observer.disconnect();
+  }, []);
 
   async function handleInquirySubmit(event) {
     event.preventDefault();
@@ -172,6 +198,9 @@ export default function HomePage() {
               <div className="hero__actions">
                 <a className="button button--solid" href="#booking">
                   Book a Class
+                </a>
+                <a className="button button--ghost" href="#contact">
+                  Send Inquiry
                 </a>
                 <a className="button button--ghost" href="#membership">
                   View Packages
