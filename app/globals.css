@@ -134,6 +134,20 @@ main {
   padding-bottom: 5rem;
 }
 
+.intro-video {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background: #000;
+  overflow: clip;
+}
+
+.intro-video__media {
+  display: block;
+  width: 100%;
+  height: min(82vh, 900px);
+  object-fit: cover;
+}
+
 .hero {
   position: relative;
   isolation: isolate;

@@ -189,6 +189,19 @@ export default function HomePage() {
       </header>
 
       <main id="top">
+        <section className="intro-video" aria-label="Academy introduction">
+          <video
+            className="intro-video__media"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          >
+            <source src="/assets/video/intro.MP4" type="video/mp4" />
+          </video>
+        </section>
+
         <section className="hero" aria-label="Hero">
           <div className="hero__backdrop"></div>
           <div className="hero__inner reveal is-visible">
