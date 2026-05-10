@@ -55,8 +55,13 @@ alter table if exists inquiries
   add column if not exists full_name text,
   add column if not exists email_address text,
   add column if not exists phone_number text,
+  add column if not exists interest text,
   add column if not exists title text,
-  add column if not exists message_body text;
+  add column if not exists message_body text,
+  add column if not exists source text;
+
+alter table if exists inquiries
+  alter column source set default 'website';
 
 update inquiries
 set
@@ -64,17 +69,23 @@ set
   last_name = coalesce(last_name, nullif(trim(replace(name, split_part(name, ' ', 1), '')), ''), ''),
   full_name = coalesce(full_name, name, ''),
   email_address = coalesce(email_address, email, ''),
+  interest = coalesce(interest, title, ''),
   title = coalesce(title, interest, ''),
-  message_body = coalesce(message_body, message, '')
+  message_body = coalesce(message_body, message, ''),
+  source = coalesce(source, 'website')
 where
   first_name is null
   or last_name is null
   or full_name is null
   or email_address is null
+  or interest is null
   or title is null
-  or message_body is null;
+  or message_body is null
+  or source is null;
 
 alter table if exists class_booking_requests
+  add column if not exists class_slug text,
+  add column if not exists class_name text,
   add column if not exists first_name text,
   add column if not exists last_name text,
   add column if not exists full_name text,
@@ -82,18 +93,27 @@ alter table if exists class_booking_requests
   add column if not exists phone_number text,
   add column if not exists interest text,
   add column if not exists title text,
-  add column if not exists message_body text;
+  add column if not exists message_body text,
+  add column if not exists status text;
+
+alter table if exists class_booking_requests
+  alter column status set default 'pending';
 
 update class_booking_requests
 set
+  class_slug = coalesce(class_slug, lower(regexp_replace(class_name, '[^a-z0-9]+', '-', 'g'))),
   first_name = coalesce(first_name, split_part(customer_name, ' ', 1), ''),
   last_name = coalesce(last_name, nullif(trim(replace(customer_name, split_part(customer_name, ' ', 1), '')), ''), ''),
   full_name = coalesce(full_name, customer_name, ''),
   email_address = coalesce(email_address, customer_email, ''),
-  title = coalesce(title, class_name, '')
+  title = coalesce(title, class_name, ''),
+  status = coalesce(status, 'pending')
 where
-  first_name is null
+  class_slug is null
+  or class_name is null
+  or first_name is null
   or last_name is null
   or full_name is null
   or email_address is null
-  or title is null;
+  or title is null
+  or status is null;
