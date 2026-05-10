@@ -12,6 +12,91 @@ const inquirySchema = z.object({
   messageBody: z.string().min(10).max(2000),
 });
 
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function formatRecipients(rawValue) {
+  return rawValue
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+}
+
+async function sendInquiryNotification({
+  firstName,
+  lastName,
+  email,
+  phoneNumber,
+  interest,
+  messageBody,
+}) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.RESEND_FROM_EMAIL;
+  const recipients = formatRecipients(process.env.INQUIRY_NOTIFICATION_TO || "");
+
+  if (!apiKey || !from || !recipients.length) {
+    return { skipped: true };
+  }
+
+  const fullName = `${firstName} ${lastName}`.trim();
+  const subject = `New inquiry: ${interest}`;
+  const escapedMessage = escapeHtml(messageBody).replaceAll("\n", "<br />");
+  const html = `
+    <div style="font-family: Arial, sans-serif; color: #111;">
+      <h2 style="margin-bottom: 16px;">New inquiry received</h2>
+      <p><strong>Interest:</strong> ${escapeHtml(interest)}</p>
+      <p><strong>Name:</strong> ${escapeHtml(fullName)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+      <p><strong>Phone:</strong> ${escapeHtml(phoneNumber)}</p>
+      <div style="margin-top: 20px;">
+        <strong>Message:</strong>
+        <p style="margin-top: 8px; line-height: 1.6;">${escapedMessage}</p>
+      </div>
+    </div>
+  `;
+
+  const text = [
+    "New inquiry received",
+    "",
+    `Interest: ${interest}`,
+    `Name: ${fullName}`,
+    `Email: ${email}`,
+    `Phone: ${phoneNumber}`,
+    "",
+    "Message:",
+    messageBody,
+  ].join("\n");
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from,
+      to: recipients,
+      subject,
+      html,
+      text,
+      reply_to: email,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Resend error: ${errorText}`);
+  }
+
+  return { skipped: false };
+}
+
 export async function POST(request) {
   const payload = await request.json().catch(() => null);
   const parsed = inquirySchema.safeParse(payload);
@@ -55,6 +140,19 @@ export async function POST(request) {
       },
       { status: 500 }
     );
+  }
+
+  try {
+    await sendInquiryNotification(parsed.data);
+  } catch (notificationError) {
+    console.error("Inquiry notification failed", notificationError);
+
+    return NextResponse.json({
+      ok: true,
+      mode: "partial",
+      message:
+        "Inquiry submitted successfully. We saved your message, but email notification needs attention.",
+    });
   }
 
   return NextResponse.json({
