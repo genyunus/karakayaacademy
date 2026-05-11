@@ -144,7 +144,8 @@ main,
 }
 
 .intro-video {
-  width: min(calc(100vw - 3rem), 1480px);
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
   border-radius: 1.5rem;
   background: #000;
@@ -659,10 +660,6 @@ main,
 }
 
 @media (max-width: 1180px) {
-  .intro-video {
-    width: min(calc(100vw - 2.5rem), 1320px);
-  }
-
   .intro-video__media {
     max-height: min(66vh, 680px);
   }
