@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import SiteHeader from "./site-header";
 import { classes, faqs, packages } from "../lib/site-data";
@@ -25,6 +25,7 @@ const initialBooking = {
 };
 
 export default function HomePage() {
+  const introVideoRef = useRef(null);
   const [openFaqIndex, setOpenFaqIndex] = useState(-1);
   const [inquiryForm, setInquiryForm] = useState(initialInquiry);
   const [bookingForm, setBookingForm] = useState(initialBooking);
@@ -57,6 +58,28 @@ export default function HomePage() {
     targets.forEach((target) => observer.observe(target));
 
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const video = introVideoRef.current;
+
+    if (!video) {
+      return undefined;
+    }
+
+    const attemptPlay = () => {
+      video.muted = true;
+      const playPromise = video.play();
+
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(() => {});
+      }
+    };
+
+    attemptPlay();
+    video.addEventListener("loadeddata", attemptPlay);
+
+    return () => video.removeEventListener("loadeddata", attemptPlay);
   }, []);
 
   async function handleInquirySubmit(event) {
@@ -124,12 +147,13 @@ export default function HomePage() {
       <main id="top">
         <section className="intro-video" aria-label="Academy introduction">
           <video
+            ref={introVideoRef}
             className="intro-video__media"
             autoPlay
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
           >
             <source src="/assets/video/intro.MP4" type="video/mp4" />
           </video>
