@@ -10,6 +10,7 @@ const inquirySchema = z.object({
   phoneNumber: z.string().trim().min(7).max(30),
   interest: z.string().min(2).max(160),
   messageBody: z.string().min(10).max(2000),
+  consent: z.literal(true),
 });
 
 function escapeHtml(value) {

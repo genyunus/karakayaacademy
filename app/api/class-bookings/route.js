@@ -12,6 +12,7 @@ const bookingSchema = z.object({
   interest: z.string().min(2).max(160),
   messageBody: z.string().min(10).max(2000),
   classSlug: z.string().min(2),
+  consent: z.literal(true),
 });
 
 function escapeHtml(value) {
