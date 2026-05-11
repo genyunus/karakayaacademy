@@ -6,7 +6,6 @@ export default function AboutPage() {
       <SiteHeader />
       <main className="about-page__main">
         <section className="about-hero">
-          <div className="about-hero__overlay"></div>
           <div className="about-hero__content">
             <p className="eyebrow">About Us</p>
             <h1>Karakaya Academy</h1>
