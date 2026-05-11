@@ -20,6 +20,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -29,6 +30,7 @@ body {
   background:
     radial-gradient(circle at top left, rgba(207, 190, 166, 0.08), transparent 24%),
     linear-gradient(180deg, #0b0b0b 0%, #040404 100%);
+  overflow-x: hidden;
 }
 
 a {
@@ -136,7 +138,7 @@ select {
 
 main,
 .about-page__main {
-  width: min(calc(100% - 3rem), var(--max-width));
+  width: min(calc(100% - 2.5rem), var(--max-width));
   margin: 0 auto;
   padding-bottom: 5rem;
 }
@@ -149,8 +151,10 @@ main,
 }
 
 .intro-video__media {
-  height: min(82vh, 900px);
-  object-fit: cover;
+  max-height: min(82vh, 900px);
+  margin: 0 auto;
+  object-fit: contain;
+  background: #000;
 }
 
 .hero {
@@ -369,8 +373,9 @@ main,
 }
 
 .photo-panel--featured {
-  width: min(calc(100vw - 3rem), 1480px);
-  margin-left: calc(50% - min(calc(100vw - 3rem), 1480px) / 2);
+  width: min(calc(100vw - 2.5rem), 1480px);
+  margin-left: auto;
+  margin-right: auto;
   min-height: min(84vh, 960px);
   border-radius: 1.6rem;
 }
@@ -561,6 +566,22 @@ main,
   resize: vertical;
 }
 
+.consent-field {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8rem;
+  align-items: start;
+  color: var(--color-text-muted);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.consent-field input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0.08rem 0 0;
+}
+
 .form-feedback {
   margin: 0;
 }
@@ -669,7 +690,8 @@ main,
   }
 
   .photo-panel img {
-    height: 460px;
+    height: auto;
+    max-height: 460px;
   }
 }
 
@@ -714,6 +736,40 @@ main,
   main,
   .about-page__main {
     width: min(calc(100% - 2rem), var(--max-width));
+  }
+
+  .intro-video {
+    padding: 0 0.75rem;
+  }
+
+  .intro-video__media {
+    width: 100%;
+    max-height: 58vh;
+    border-radius: 1rem;
+  }
+
+  .photo-panel--featured {
+    width: calc(100vw - 2rem);
+    min-height: 0;
+  }
+
+  .photo-panel--featured img {
+    width: 100%;
+    height: auto;
+    max-height: none;
+  }
+
+  .hero__inner {
+    width: min(calc(100% - 2rem), var(--max-width));
+  }
+
+  .contact-layout {
+    gap: 1.25rem;
+  }
+
+  .about-copy {
+    font-size: 1.04rem;
+    line-height: 1.75;
   }
 
   .about-hero {

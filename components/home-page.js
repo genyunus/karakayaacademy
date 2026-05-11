@@ -12,6 +12,7 @@ const initialInquiry = {
   phoneNumber: "",
   interest: "",
   messageBody: "",
+  consent: false,
 };
 
 const initialBooking = {
@@ -22,6 +23,7 @@ const initialBooking = {
   interest: "",
   messageBody: "",
   classSlug: classes[0]?.slug ?? "",
+  consent: false,
 };
 
 export default function HomePage() {
@@ -342,6 +344,25 @@ export default function HomePage() {
                   required
                 ></textarea>
               </label>
+              <label className="consent-field">
+                <input
+                  type="checkbox"
+                  name="consent"
+                  checked={bookingForm.consent}
+                  onChange={(event) =>
+                    setBookingForm((current) => ({
+                      ...current,
+                      consent: event.target.checked,
+                    }))
+                  }
+                  required
+                />
+                <span>
+                  I agree to receive calls, emails, and text messages from Karakaya
+                  Academy about my booking request. Consent is not a condition of
+                  purchase. Message and data rates may apply.
+                </span>
+              </label>
               <button className="button button--solid" type="submit" disabled={submittingBooking}>
                 {submittingBooking ? "Submitting..." : "Request Booking"}
               </button>
@@ -555,6 +576,25 @@ export default function HomePage() {
                   placeholder="Tell us what you're looking for."
                   required
                 ></textarea>
+              </label>
+              <label className="consent-field">
+                <input
+                  type="checkbox"
+                  name="consent"
+                  checked={inquiryForm.consent}
+                  onChange={(event) =>
+                    setInquiryForm((current) => ({
+                      ...current,
+                      consent: event.target.checked,
+                    }))
+                  }
+                  required
+                />
+                <span>
+                  I agree to receive calls, emails, and text messages from Karakaya
+                  Academy about my inquiry. Consent is not a condition of purchase.
+                  Message and data rates may apply.
+                </span>
               </label>
               <button className="button button--solid" type="submit" disabled={submittingInquiry}>
                 {submittingInquiry ? "Sending..." : "Send Inquiry"}
