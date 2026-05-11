@@ -30,10 +30,8 @@ export default function HomePage() {
   const [bookingForm, setBookingForm] = useState(initialBooking);
   const [inquiryState, setInquiryState] = useState({ type: "", message: "" });
   const [bookingState, setBookingState] = useState({ type: "", message: "" });
-  const [checkoutState, setCheckoutState] = useState({ type: "", message: "" });
   const [submittingInquiry, setSubmittingInquiry] = useState(false);
   const [submittingBooking, setSubmittingBooking] = useState(false);
-  const [startingCheckout, setStartingCheckout] = useState("");
 
   useEffect(() => {
     const targets = Array.from(document.querySelectorAll(".reveal"));
@@ -119,33 +117,6 @@ export default function HomePage() {
     }
   }
 
-  async function startCheckout(packageSlug) {
-    setStartingCheckout(packageSlug);
-    setCheckoutState({ type: "", message: "" });
-
-    try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ packageSlug }),
-      });
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || "Could not start checkout.");
-      }
-
-      if (result.checkoutUrl) {
-        window.location.href = result.checkoutUrl;
-        return;
-      }
-    } catch (error) {
-      setCheckoutState({ type: "info", message: error.message });
-    } finally {
-      setStartingCheckout("");
-    }
-  }
-
   return (
     <div className="page-shell">
       <SiteHeader />
@@ -162,6 +133,45 @@ export default function HomePage() {
           >
             <source src="/assets/video/intro.MP4" type="video/mp4" />
           </video>
+        </section>
+
+        <section className="section section--difference reveal" id="difference">
+          <div className="section-heading section-heading--wide">
+            <p className="eyebrow">What Differentiates Us</p>
+            <h2>Technique, intent, and real progression in every session.</h2>
+          </div>
+          <figure className="photo-panel photo-panel--featured">
+            <img
+              src="/assets/images/IMG_9395.JPG"
+              alt="Coach observing a client during a boxing session."
+            />
+          </figure>
+          <div className="difference-points difference-points--stacked">
+            <article>
+              <span>01</span>
+              <h3>Focused private coaching</h3>
+              <p>
+                Every session is personalized around your goals, your current
+                level, and the adjustments you need to keep improving.
+              </p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Boxing supported by performance training</h3>
+              <p>
+                Strength, conditioning, and movement work are programmed to make
+                the boxing better, not compete with it.
+              </p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Premium, supportive environment</h3>
+              <p>
+                The atmosphere is calm, professional, and motivating so you can
+                stay consistent and train with purpose.
+              </p>
+            </article>
+          </div>
         </section>
 
         <section className="hero reveal is-visible" id="booking" aria-label="Book a Class">
@@ -185,8 +195,8 @@ export default function HomePage() {
                 <a className="button button--solid" href="#booking-form">
                   Book a Class
                 </a>
-                <a className="button button--ghost" href="#packages">
-                  View Packages
+                <a className="button button--ghost" href="#pricing">
+                  Pricing
                 </a>
                 <a className="button button--ghost" href="#contact">
                   Send Inquiry
@@ -327,81 +337,34 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="section section--difference reveal" id="difference">
+        <section className="section section--packages reveal" id="pricing">
           <div className="section-heading section-heading--wide">
-            <p className="eyebrow">What Differentiates Us</p>
-            <h2>Technique, intent, and real progression in every session.</h2>
-          </div>
-          <figure className="photo-panel photo-panel--featured">
-            <img
-              src="/assets/images/IMG_6611.jpg"
-              alt="Coach leading a functional mobility session overlooking the ocean."
-            />
-          </figure>
-          <div className="difference-points difference-points--stacked">
-            <article>
-              <span>01</span>
-              <h3>Focused private coaching</h3>
-              <p>
-                Every session is personalized around your goals, your current
-                level, and the adjustments you need to keep improving.
-              </p>
-            </article>
-            <article>
-              <span>02</span>
-              <h3>Boxing supported by performance training</h3>
-              <p>
-                Strength, conditioning, and movement work are programmed to make
-                the boxing better, not compete with it.
-              </p>
-            </article>
-            <article>
-              <span>03</span>
-              <h3>Premium, supportive environment</h3>
-              <p>
-                The atmosphere is calm, professional, and motivating so you can
-                stay consistent and train with purpose.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section className="section section--packages reveal" id="packages">
-          <div className="section-heading section-heading--wide">
-            <p className="eyebrow">Packages</p>
+            <p className="eyebrow">Pricing</p>
             <h2>Choose the format that matches how you want to train.</h2>
           </div>
           <div className="package-grid">
             {packages.map((item) => (
               <article className="package-card" key={item.slug}>
-                <p className="eyebrow">{item.badge}</p>
-                <h3>{item.name}</h3>
-                <p className="package-price">{item.priceLabel}</p>
-                {item.secondaryPriceLabel ? (
-                  <p className="package-subprice">{item.secondaryPriceLabel}</p>
-                ) : null}
-                <p>{item.description}</p>
-                <ul className="meta-list">
-                  {item.features.map((feature) => (
-                    <li key={feature}>{feature}</li>
-                  ))}
-                </ul>
-                <button
-                  className="button button--solid"
-                  type="button"
-                  onClick={() => startCheckout(item.slug)}
-                  disabled={startingCheckout === item.slug}
-                >
-                  {startingCheckout === item.slug ? "Starting..." : "Buy Package"}
-                </button>
+                <div className="package-card__content">
+                  <p className="eyebrow">{item.badge}</p>
+                  <h3>{item.name}</h3>
+                  <p className="package-price">{item.priceLabel}</p>
+                  {item.secondaryPriceLabel ? (
+                    <p className="package-subprice">{item.secondaryPriceLabel}</p>
+                  ) : null}
+                  <p>{item.description}</p>
+                  <ul className="meta-list">
+                    {item.features.map((feature) => (
+                      <li key={feature}>{feature}</li>
+                    ))}
+                  </ul>
+                </div>
+                <a className="button button--solid package-card__cta" href="#booking-form">
+                  Buy Package
+                </a>
               </article>
             ))}
           </div>
-          {checkoutState.message ? (
-            <p className={`form-feedback form-feedback--${checkoutState.type || "info"}`}>
-              {checkoutState.message}
-            </p>
-          ) : null}
         </section>
 
         <section className="faq-section reveal" id="faq">
@@ -439,6 +402,21 @@ export default function HomePage() {
           </div>
           <div className="contact-layout">
             <div className="contact-copy">
+              <a
+                className="map-card"
+                href="https://www.google.com/maps/search/?api=1&query=733+North+Kings+Road,+West+Hollywood,+California,+90069"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open Karakaya Academy location in Google Maps"
+              >
+                <iframe
+                  title="Karakaya Academy location map"
+                  src="https://www.google.com/maps?q=733+North+Kings+Road,+West+Hollywood,+California,+90069&output=embed"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+                <span className="map-card__badge">Open in Google Maps</span>
+              </a>
               <p>
                 Reach out for questions, private training details, or to find
                 the best starting point for your goals.

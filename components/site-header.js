@@ -35,8 +35,8 @@ export default function SiteHeader() {
         <a href="/#booking" onClick={handleNavigate}>
           Book a Class
         </a>
-        <a href="/#packages" onClick={handleNavigate}>
-          Packages
+        <a href="/#pricing" onClick={handleNavigate}>
+          Pricing
         </a>
         <a href="/#faq" onClick={handleNavigate}>
           FAQ
