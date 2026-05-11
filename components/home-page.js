@@ -331,7 +331,7 @@ export default function HomePage() {
         </section>
 
         <section className="section section--packages reveal" id="pricing">
-          <div className="section-heading section-heading--wide">
+          <div className="section-heading section-heading--wide section-heading--pricing">
             <p className="eyebrow">Pricing</p>
             <h2>Choose the format that matches how you want to train.</h2>
           </div>
@@ -389,7 +389,7 @@ export default function HomePage() {
         </section>
 
         <section className="contact-section reveal" id="contact">
-          <div className="section-heading">
+          <div className="section-heading section-heading--contact">
             <p className="eyebrow">Contact</p>
             <h2>Start the conversation.</h2>
           </div>

@@ -339,6 +339,13 @@ main,
   white-space: nowrap;
 }
 
+.section-heading--pricing h2,
+.section-heading--contact h2 {
+  max-width: none;
+  white-space: nowrap;
+  font-size: clamp(2.2rem, 4vw, 4.2rem);
+}
+
 .section-heading--faq h2 {
   max-width: none;
   white-space: nowrap;
@@ -348,6 +355,7 @@ main,
 .section--difference {
   display: grid;
   gap: 1.35rem;
+  justify-items: center;
 }
 
 .photo-panel {
@@ -361,7 +369,10 @@ main,
 }
 
 .photo-panel--featured {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   min-height: min(84vh, 960px);
+  border-radius: 0;
 }
 
 .photo-panel--featured img {
@@ -645,6 +656,8 @@ main,
   }
 
   .section-heading--difference h2,
+  .section-heading--pricing h2,
+  .section-heading--contact h2,
   .section-heading--faq h2 {
     white-space: normal;
   }
