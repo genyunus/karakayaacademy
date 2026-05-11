@@ -62,7 +62,7 @@ select {
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  width: min(calc(100% - 2rem), var(--max-width));
+  width: min(calc(100% - 1rem), 1360px);
   margin: 0 auto;
   padding: 1.2rem 0;
   backdrop-filter: blur(22px);
@@ -329,6 +329,10 @@ main,
   max-width: 13ch;
 }
 
+.section-heading--difference h2 {
+  max-width: 18ch;
+}
+
 .section--difference {
   display: grid;
   gap: 1.35rem;
@@ -342,6 +346,14 @@ main,
 .photo-panel img {
   height: min(72vh, 820px);
   object-fit: cover;
+}
+
+.photo-panel--featured {
+  min-height: min(78vh, 880px);
+}
+
+.photo-panel--featured img {
+  height: 100%;
 }
 
 .difference-points {
@@ -580,6 +592,7 @@ main,
   border-radius: 1.8rem;
   background: rgba(8, 8, 8, 0.62);
   backdrop-filter: blur(12px);
+  font-size: 1.08rem;
 }
 
 .reveal {

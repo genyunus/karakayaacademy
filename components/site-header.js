@@ -13,7 +13,7 @@ export default function SiteHeader() {
     <header className="site-header">
       <a className="brand-mark" href="/" aria-label="Karakaya home">
         <span className="brand-mark__name">Karakaya</span>
-        <span className="brand-mark__tag">Boxing x Functional Training</span>
+        <span className="brand-mark__tag">Boxing x Functional Hybrid Training</span>
       </a>
       <button
         className="menu-toggle"
