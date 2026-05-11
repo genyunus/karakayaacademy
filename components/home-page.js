@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import SiteHeader from "./site-header";
 import { classes, faqs, packages } from "../lib/site-data";
 
 const initialInquiry = {
@@ -24,7 +25,6 @@ const initialBooking = {
 };
 
 export default function HomePage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [inquiryForm, setInquiryForm] = useState(initialInquiry);
   const [bookingForm, setBookingForm] = useState(initialBooking);
@@ -148,45 +148,7 @@ export default function HomePage() {
 
   return (
     <div className="page-shell">
-      <header className="site-header">
-        <a className="brand-mark" href="#top" aria-label="Karakayaacademy home">
-          <span className="brand-mark__name">Karakayaacademy</span>
-          <span className="brand-mark__tag">Boxing x Functional Training</span>
-        </a>
-        <button
-          className="menu-toggle"
-          type="button"
-          aria-expanded={mobileMenuOpen}
-          aria-controls="site-nav"
-          onClick={() => setMobileMenuOpen((value) => !value)}
-        >
-          Menu
-        </button>
-        <nav
-          className={`site-nav${mobileMenuOpen ? " is-open" : ""}`}
-          id="site-nav"
-          aria-label="Primary"
-        >
-          <a href="#info" onClick={() => setMobileMenuOpen(false)}>
-            Info
-          </a>
-          <a href="#about" onClick={() => setMobileMenuOpen(false)}>
-            About Us
-          </a>
-          <a href="#booking" onClick={() => setMobileMenuOpen(false)}>
-            Book a Class
-          </a>
-          <a href="#membership" onClick={() => setMobileMenuOpen(false)}>
-            Membership
-          </a>
-          <a href="#faq" onClick={() => setMobileMenuOpen(false)}>
-            FAQ
-          </a>
-          <a href="#contact" onClick={() => setMobileMenuOpen(false)}>
-            Contact
-          </a>
-        </nav>
-      </header>
+      <SiteHeader />
 
       <main id="top">
         <section className="intro-video" aria-label="Academy introduction">
@@ -202,212 +164,41 @@ export default function HomePage() {
           </video>
         </section>
 
-        <section className="hero" aria-label="Hero">
+        <section className="hero reveal is-visible" id="booking" aria-label="Book a Class">
           <div className="hero__backdrop"></div>
-          <div className="hero__inner reveal is-visible">
-            <div className="hero__copy">
-              <p className="eyebrow">Precision. Presence. Performance.</p>
-              <h1>Where elite boxing meets functional conditioning.</h1>
+          <div className="hero__inner">
+            <div className="hero__content">
+              <p className="eyebrow">Book a Class</p>
+              <h1>Boxing, strength, and conditioning in one focused system.</h1>
               <p className="hero__summary">
-                Karakayaacademy is a disciplined training environment built for
-                people who want more than a workout. We fuse technical boxing,
-                athletic movement, and premium coaching into one purposeful
-                system.
+                Private sessions and high-attention training designed to build
+                confidence, sharpen skill, and improve the way you move.
               </p>
+              <article className="hero-note hero-note--single">
+                <span>Boxing + Functional Training</span>
+                <p>
+                  Technical boxing, movement, conditioning, and strength work
+                  blended into one premium training experience.
+                </p>
+              </article>
               <div className="hero__actions">
-                <a className="button button--solid" href="#booking">
+                <a className="button button--solid" href="#booking-form">
                   Book a Class
+                </a>
+                <a className="button button--ghost" href="#packages">
+                  View Packages
                 </a>
                 <a className="button button--ghost" href="#contact">
                   Send Inquiry
                 </a>
-                <a className="button button--ghost" href="#membership">
-                  View Packages
-                </a>
               </div>
             </div>
 
-            <div className="hero__rail">
-              <article className="hero-note">
-                <span>Boxing</span>
-                <p>
-                  Sharp technical rounds that teach timing, defense, rhythm, and
-                  control.
-                </p>
-              </article>
-              <article className="hero-note">
-                <span>Functional Training</span>
-                <p>
-                  Strength, mobility, balance, and engine work designed to
-                  improve how you move.
-                </p>
-              </article>
-              <article className="hero-note">
-                <span>Coaching</span>
-                <p>
-                  High-touch instruction with a luxury atmosphere and real
-                  progression.
-                </p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section className="info-strip reveal" id="info">
-          <article>
-            <span>Format</span>
-            <p>Private coaching, selective small groups, and academy-style progression.</p>
-          </article>
-          <article>
-            <span>Training Lens</span>
-            <p>Technique-first boxing blended with strength, movement, and recovery.</p>
-          </article>
-          <article>
-            <span>Experience</span>
-            <p>A clean, elevated environment built for focus, confidence, and consistency.</p>
-          </article>
-        </section>
-
-        <section className="section section--split section--about reveal" id="about">
-          <div className="section-heading">
-            <p className="eyebrow">About Us</p>
-            <h2>Built around the full spectrum of performance.</h2>
-          </div>
-          <div className="section-copy">
-            <p>
-              Karakayaacademy was designed for people who want structure,
-              elegance, and results in the same room. The boxing side develops
-              timing, confidence, and sharp mechanics. The functional side
-              develops durability, control, and movement that carries into daily
-              life.
-            </p>
-            <p>
-              That balance is the product. We are not selling random intensity.
-              We are building capable bodies and composed athletes through
-              thoughtful coaching, premium standards, and a training rhythm that
-              respects both performance and longevity.
-            </p>
-          </div>
-          <figure className="photo-panel photo-panel--tall">
-            <img
-              src="/assets/images/IMG_6611.jpg"
-              alt="Coach leading a functional mobility session overlooking the ocean."
-            />
-          </figure>
-        </section>
-
-        <section className="section section--editorial reveal" id="why">
-          <div className="section-heading section-heading--wide">
-            <p className="eyebrow">Why Karakayaacademy</p>
-            <h2>Because serious training should feel intentional at every level.</h2>
-          </div>
-          <div className="editorial-grid">
-            <article className="editorial-card">
-              <h3>Technical before theatrical</h3>
-              <p>
-                Every session starts with sound mechanics so speed, power, and
-                conditioning grow from quality instead of chaos.
-              </p>
-            </article>
-            <article className="editorial-card">
-              <h3>Athleticism with carryover</h3>
-              <p>
-                Functional blocks train rotation, posture, deceleration, core
-                control, and resilience that support both boxing and real life.
-              </p>
-            </article>
-            <article className="editorial-card">
-              <h3>Premium environment, clear standards</h3>
-              <p>
-                The experience is calm, focused, and refined, which changes how
-                people show up, train, and stay committed.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section className="manifesto reveal">
-          <figure className="photo-banner">
-            <img
-              src="/assets/images/IMG_9395.JPG"
-              alt="Close-up training moment during a boxing session."
-            />
-            <figcaption>
-              <p className="eyebrow">Atmosphere</p>
-              <h2>Training that feels cinematic because the work is real.</h2>
-              <p>
-                The close-up tension, the controlled pace, the attention to
-                detail. This is the energy we want the academy to project.
-              </p>
-            </figcaption>
-          </figure>
-        </section>
-
-        <section className="section section--difference reveal" id="difference">
-          <div className="difference-copy">
-            <div className="section-heading">
-              <p className="eyebrow">What Differentiates Us</p>
-              <h2>Coaching detail, not just class volume.</h2>
-            </div>
-            <div className="difference-points">
-              <article>
-                <span>01</span>
-                <h3>Hands-on coaching</h3>
-                <p>
-                  You are seen, corrected, and progressed instead of being left
-                  to survive a circuit.
-                </p>
-              </article>
-              <article>
-                <span>02</span>
-                <h3>Boxing integrated with preparation</h3>
-                <p>
-                  Pad work, mobility, strength, and recovery are programmed to
-                  support one another as a complete system.
-                </p>
-              </article>
-              <article>
-                <span>03</span>
-                <h3>Identity beyond the gym floor</h3>
-                <p>
-                  The brand can expand into lifestyle, retreats, private
-                  coaching, and elevated member experiences without changing its
-                  core.
-                </p>
-              </article>
-            </div>
-          </div>
-          <figure className="photo-panel photo-panel--wide">
-            <img
-              src="/assets/images/IMG_8816.JPG"
-              alt="Coach observing an athlete while gloves are adjusted before training."
-            />
-          </figure>
-        </section>
-
-        <section className="section section--capabilities reveal" id="booking">
-          <div className="section-heading section-heading--wide">
-            <p className="eyebrow">Book a Class</p>
-            <h2>Launch with simple booking now, then automate confirmations next.</h2>
-          </div>
-          <div className="capability-layout">
-            <div className="capability-cards">
-              {classes.map((classItem) => (
-                <article className="capability-card" key={classItem.slug}>
-                  <div>
-                    <p className="eyebrow">{classItem.type}</p>
-                    <h3>{classItem.name}</h3>
-                  </div>
-                  <p>{classItem.description}</p>
-                  <ul className="meta-list">
-                    <li>{classItem.duration}</li>
-                    <li>{classItem.capacity}</li>
-                    <li>{classItem.priceLabel}</li>
-                  </ul>
-                </article>
-              ))}
-            </div>
-            <form className="contact-form capability-form" onSubmit={handleBookingSubmit}>
+            <form
+              className="contact-form hero-form"
+              id="booking-form"
+              onSubmit={handleBookingSubmit}
+            >
               <label>
                 First name
                 <input
@@ -536,10 +327,49 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="section section--capabilities reveal" id="membership">
+        <section className="section section--difference reveal" id="difference">
           <div className="section-heading section-heading--wide">
-            <p className="eyebrow">Membership & Packages</p>
-            <h2>Sell intro offers first, then memberships once demand is consistent.</h2>
+            <p className="eyebrow">What Differentiates Us</p>
+            <h2>Technique, intent, and real progression in every session.</h2>
+          </div>
+          <figure className="photo-panel photo-panel--featured">
+            <img
+              src="/assets/images/IMG_6611.jpg"
+              alt="Coach leading a functional mobility session overlooking the ocean."
+            />
+          </figure>
+          <div className="difference-points difference-points--stacked">
+            <article>
+              <span>01</span>
+              <h3>Focused private coaching</h3>
+              <p>
+                Every session is personalized around your goals, your current
+                level, and the adjustments you need to keep improving.
+              </p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Boxing supported by performance training</h3>
+              <p>
+                Strength, conditioning, and movement work are programmed to make
+                the boxing better, not compete with it.
+              </p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Premium, supportive environment</h3>
+              <p>
+                The atmosphere is calm, professional, and motivating so you can
+                stay consistent and train with purpose.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section className="section section--packages reveal" id="packages">
+          <div className="section-heading section-heading--wide">
+            <p className="eyebrow">Packages</p>
+            <h2>Choose the format that matches how you want to train.</h2>
           </div>
           <div className="package-grid">
             {packages.map((item) => (
@@ -547,6 +377,9 @@ export default function HomePage() {
                 <p className="eyebrow">{item.badge}</p>
                 <h3>{item.name}</h3>
                 <p className="package-price">{item.priceLabel}</p>
+                {item.secondaryPriceLabel ? (
+                  <p className="package-subprice">{item.secondaryPriceLabel}</p>
+                ) : null}
                 <p>{item.description}</p>
                 <ul className="meta-list">
                   {item.features.map((feature) => (
@@ -574,7 +407,7 @@ export default function HomePage() {
         <section className="faq-section reveal" id="faq">
           <div className="section-heading section-heading--wide">
             <p className="eyebrow">FAQ</p>
-            <h2>Questions people ask before they commit.</h2>
+            <h2>Questions before your first session.</h2>
           </div>
           <div className="faq-list">
             {faqs.map((faq, index) => {
@@ -602,22 +435,25 @@ export default function HomePage() {
         <section className="contact-section reveal" id="contact">
           <div className="section-heading">
             <p className="eyebrow">Contact</p>
-            <h2>Start the conversation with the academy.</h2>
+            <h2>Start the conversation.</h2>
           </div>
           <div className="contact-layout">
             <div className="contact-copy">
               <p>
-                This version is already positioned more like a premium product
-                than a generic fitness page. The next refinement should be your
-                real location, founder story, pricing structure, and booking
-                flow.
+                Reach out for questions, private training details, or to find
+                the best starting point for your goals.
               </p>
               <ul className="contact-details">
-                <li>Email: hello@karakayaacademy.com</li>
-                <li>Phone: +1 (000) 000-0000</li>
-                <li>Location: Studio details to be added</li>
+                <li>
+                  Email: <a href="mailto:support@karakayaacademy.com">support@karakayaacademy.com</a>
+                </li>
+                <li>
+                  Phone: <a href="tel:+13107601846">+1-310-760-1846</a>
+                </li>
+                <li>Location: 733 North Kings Road, West Hollywood, California, 90069</li>
               </ul>
             </div>
+
             <form className="contact-form" onSubmit={handleInquirySubmit}>
               <label>
                 First name
@@ -691,9 +527,12 @@ export default function HomePage() {
                   name="interest"
                   value={inquiryForm.interest}
                   onChange={(event) =>
-                    setInquiryForm((current) => ({ ...current, interest: event.target.value }))
+                    setInquiryForm((current) => ({
+                      ...current,
+                      interest: event.target.value,
+                    }))
                   }
-                  placeholder="Private coaching, membership, consultation..."
+                  placeholder="What are you interested in?"
                   required
                 />
               </label>
@@ -709,12 +548,12 @@ export default function HomePage() {
                       messageBody: event.target.value,
                     }))
                   }
-                  placeholder="Tell us what kind of training experience you're looking for."
+                  placeholder="Tell us what you're looking for."
                   required
                 ></textarea>
               </label>
               <button className="button button--solid" type="submit" disabled={submittingInquiry}>
-                {submittingInquiry ? "Submitting..." : "Send Inquiry"}
+                {submittingInquiry ? "Sending..." : "Send Inquiry"}
               </button>
               {inquiryState.message ? (
                 <p className={`form-feedback form-feedback--${inquiryState.type || "info"}`}>
