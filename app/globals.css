@@ -62,7 +62,7 @@ select {
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  width: min(calc(100% - 0.2rem), 1520px);
+  width: min(calc(100% - 3rem), 1460px);
   margin: 0 auto;
   padding: 1.2rem 0;
   backdrop-filter: blur(22px);
@@ -136,7 +136,7 @@ select {
 
 main,
 .about-page__main {
-  width: min(calc(100% - 2rem), var(--max-width));
+  width: min(calc(100% - 3rem), var(--max-width));
   margin: 0 auto;
   padding-bottom: 5rem;
 }
@@ -369,10 +369,10 @@ main,
 }
 
 .photo-panel--featured {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
+  width: min(calc(100vw - 3rem), 1480px);
+  margin-left: calc(50% - min(calc(100vw - 3rem), 1480px) / 2);
   min-height: min(84vh, 960px);
-  border-radius: 0;
+  border-radius: 1.6rem;
 }
 
 .photo-panel--featured img {
@@ -383,6 +383,8 @@ main,
 .difference-points {
   display: grid;
   gap: 1rem;
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .difference-points article {
@@ -639,6 +641,10 @@ main,
     grid-template-columns: 1fr;
   }
 
+  .difference-points {
+    grid-template-columns: 1fr;
+  }
+
   .package-grid {
     grid-template-columns: 1fr;
   }
@@ -671,6 +677,7 @@ main,
   .site-header {
     flex-wrap: wrap;
     padding-top: 1rem;
+    width: min(calc(100% - 2rem), 1460px);
   }
 
   .menu-toggle {
@@ -702,6 +709,11 @@ main,
   .faq-section,
   .contact-section {
     padding: 3.5rem 0;
+  }
+
+  main,
+  .about-page__main {
+    width: min(calc(100% - 2rem), var(--max-width));
   }
 
   .about-hero {
