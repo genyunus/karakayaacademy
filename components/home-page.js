@@ -361,7 +361,7 @@ export default function HomePage() {
         </section>
 
         <section className="faq-section reveal" id="faq">
-          <div className="section-heading section-heading--wide">
+          <div className="section-heading section-heading--wide section-heading--faq">
             <p className="eyebrow">FAQ</p>
             <h2>Questions before your first session.</h2>
           </div>
