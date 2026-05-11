@@ -25,7 +25,7 @@ const initialBooking = {
 };
 
 export default function HomePage() {
-  const [openFaqIndex, setOpenFaqIndex] = useState(0);
+  const [openFaqIndex, setOpenFaqIndex] = useState(-1);
   const [inquiryForm, setInquiryForm] = useState(initialInquiry);
   const [bookingForm, setBookingForm] = useState(initialBooking);
   const [inquiryState, setInquiryState] = useState({ type: "", message: "" });
@@ -136,7 +136,7 @@ export default function HomePage() {
         </section>
 
         <section className="section section--difference reveal" id="difference">
-          <div className="section-heading section-heading--wide">
+          <div className="section-heading section-heading--wide section-heading--difference">
             <p className="eyebrow">What Differentiates Us</p>
             <h2>Technique, intent, and real progression in every session.</h2>
           </div>
@@ -184,13 +184,6 @@ export default function HomePage() {
                 Private sessions and high-attention training designed to build
                 confidence, sharpen skill, and improve the way you move.
               </p>
-              <article className="hero-note hero-note--single">
-                <span>Boxing + Functional Training</span>
-                <p>
-                  Technical boxing, movement, conditioning, and strength work
-                  blended into one premium training experience.
-                </p>
-              </article>
               <div className="hero__actions">
                 <a className="button button--solid" href="#booking-form">
                   Book a Class
@@ -428,7 +421,16 @@ export default function HomePage() {
                 <li>
                   Phone: <a href="tel:+13107601846">+1-310-760-1846</a>
                 </li>
-                <li>Location: 733 North Kings Road, West Hollywood, California, 90069</li>
+                <li>
+                  Location:{" "}
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=733+North+Kings+Road,+West+Hollywood,+California,+90069"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    733 North Kings Road, West Hollywood, California, 90069
+                  </a>
+                </li>
               </ul>
             </div>
 
