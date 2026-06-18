@@ -466,16 +466,6 @@ export default function HomePage() {
                 <li>
                   Phone: <a href="tel:+13107601846">+1-310-760-1846</a>
                 </li>
-                <li>
-                  Location:{" "}
-                  <a
-                    href="https://www.google.com/maps/search/?api=1&query=733+North+Kings+Road,+West+Hollywood,+California,+90069"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    733 North Kings Road, West Hollywood, California, 90069
-                  </a>
-                </li>
               </ul>
             </div>
 
